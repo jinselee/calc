@@ -1,10 +1,19 @@
 cmake_minimum_required(VERSION 3.10)
-project(hello)
-include_directories(inc)
-link_directories(prog PUBLIC .)
-add_compile_options(-Wall)
+project(calc C)
 
-add_library(arithmetic SHARED add.c sub.c mul.c dur.c)
+
+add_library(arithmetic SHARED
+  add.c sub.c mul.c dur.c
+)
+target_include_directories(arithmetic PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/inc
+)
+
 
 add_executable(prog cal_main.c)
-target_link_libraries(prog PUBLIC arithmetic)
+target_include_directories(prog PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/inc
+)
+
+
+target_link_libraries(prog PRIVATE arithmetic)
